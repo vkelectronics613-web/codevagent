@@ -60,15 +60,6 @@ export class Planner {
     }
 
     if (!projectType) {
-      for (const idea of ideas) {
-        if (idea.keywords.some(kw => input.includes(kw))) {
-          projectType = idea.name;
-          break;
-        }
-      }
-    }
-
-    if (!projectType) {
       return { summary: "I'm here to help! Try 'make a todo app', 'create a website', or 'give me ideas'.", steps: [] };
     }
 
@@ -77,38 +68,23 @@ export class Planner {
 
     let prompt;
     if (isFlutter) {
-      prompt = `Create a complete Flutter mobile app. Current project: ${projectType}, files: ${fileList}.
-
-Output ONLY valid JSON - no markdown, no explanations, no code blocks. Format:
-{"summary": "Brief description", "steps": [{"action": "create_file|run_command|create_folder|github", "path": "file", "description": "what", "content": "code"}]}
-
-IMPORTANT - Flutter requires full project structure:
-1. {"action": "run_command", "description": "Create Flutter project", "command": "flutter create --org com.example --project-name todo_app ."}
-2. {"action": "run_command", "description": "Get dependencies", "command": "flutter pub get"}
-3. {"action": "run_command", "description": "Build debug APK", "command": "flutter build apk --debug"}
-4. {"action": "github", "description": "Publish to GitHub", "command": "publish"}
-
-For the main.dart, use modern Material Design 3 with clean UI, proper state management, and beautiful styling.
-
-Output only valid JSON.`;
+      prompt = `Respond with ONLY this JSON:
+{"summary":"Create Flutter ${projectType}","steps":[{"action":"run_command","command":"flutter create --org com.example ${projectType.toLowerCase().replace(/\s+/g, '_')}","description":"Create Flutter project"},{"action":"run_command","command":"cd ${projectType.toLowerCase().replace(/\s+/g, '_')} && flutter pub get","description":"Get dependencies"},{"action":"run_command","command":"cd ${projectType.toLowerCase().replace(/\s+/g, '_')} && flutter build apk --debug","description":"Build APK"},{"action":"github","description":"Publish to GitHub"}]}`;
     } else {
-      prompt = `Create a complete React website. Current project: ${projectType}, existing files: ${fileList}.
-
-Output ONLY valid JSON - no markdown, no explanations, no code blocks. Format:
-{"summary": "Brief description", "steps": [{"action": "create_file|run_command|create_folder|github", "path": "file", "description": "what", "content": "code"}]}
-
-IMPORTANT - Use EXACT command strings:
-- For npm install: use "npm install" (NOT "Install dependencies")
-- For dev server: use "npm run dev" or "npm start"
-- Create these files: package.json, src/App.jsx, src/App.css, public/index.html
-- Use modern React with Material Design or Tailwind CSS for beautiful UI
-- Add {"action": "github", "description": "Publish to GitHub", "command": "publish"} as the final step
-
-For the UI: Use modern Material Design 3, clean components, nice gradients, shadows, and responsive layout. Make it look professional and visually appealing.
-
-Output only valid JSON.`;
+      const appName = projectType.toLowerCase().replace(/\s+/g, '-');
+      prompt = `Respond with ONLY this JSON:
+{"summary":"Create React ${projectType} Website","steps":[{"action":"run_command","command":"npm create vite@latest ${appName} -- --template react","description":"Create React app"},{"action":"run_command","command":"cd ${appName} && npm install && npm run dev","description":"Install and run dev server"},{"action":"github","description":"Publish to GitHub"}]}`;
     }
 
+    try {
+      return await this.callAPI(prompt);
+    } catch (firstError) {
+      const simplerPrompt = `Create a simple ${isFlutter ? 'Flutter' : 'React'} app. Output JSON: {"summary":"App","steps":[{"action":"run_command","command":"${isFlutter ? 'flutter create todo . && flutter pub get && flutter build apk --debug' : 'npm create vite@latest todo-app -- --template react && cd todo-app && npm install && npm run dev'}"}]}`;
+      return await this.callAPI(simplerPrompt);
+    }
+  }
+
+  async callAPI(prompt) {
     const res = await fetch(`${this.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${this.apiKey}`, 'Content-Type': 'application/json' },
@@ -116,7 +92,7 @@ Output only valid JSON.`;
         model: "llama-3.1-8b",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.2,
-        max_tokens: 12000
+        max_tokens: 8000
       })
     });
 

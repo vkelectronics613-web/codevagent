@@ -78,14 +78,19 @@ try {
         plan = await this.planner.createPlan(input, context, this.conversationHistory);
       } catch (planErr) {
         const errMsg = planErr.message || '';
-        if (errMsg.includes('Cannot read image') || errMsg.includes('vision') || errMsg.includes('image input')) {
+        if (errMsg.includes('Cannot read image') || errMsg.includes('vision') || errMsg.includes('image input') || errMsg.includes('vision model')) {
           await this.byte.show('error', 'Vision not supported.');
-          this.ui.printError('This AI model does not support image input. It only works with text/code.');
+          this.ui.printError('This AI model only works with text/code, not images.');
           return;
         }
         if (errMsg.includes('Cerebras API error')) {
           await this.byte.show('error', 'API Error');
           this.ui.printError(errMsg);
+          return;
+        }
+        if (errMsg.includes('Invalid JSON')) {
+          await this.byte.show('error', 'AI returned invalid response.');
+          this.ui.printError('Try again with a simpler request.');
           return;
         }
         throw planErr;
@@ -243,7 +248,7 @@ await this.byte.show('success', 'Done. Everything landed cleanly.');
 
   async handleGithub() {
     const ghToken = this.config.get('githubToken') || process.env.GITHUB_TOKEN;
-    const repoName = path.basename(this.workspace.root);
+    let repoName = path.basename(this.workspace.root).replace(/[^a-zA-Z0-9-_]/g, '_');
 
     if (ghToken) {
       await this.byte.show('working', 'Publishing to GitHub...');
@@ -256,7 +261,7 @@ await this.byte.show('success', 'Done. Everything landed cleanly.');
         }
 
         await this.tools.execute('run_command', { command: 'git add .' });
-        await this.tools.execute('run_command', { command: 'git commit -m "Updated via CodeVagent"' });
+        await this.tools.execute('run_command', { command: 'git commit -m "Initial via CodeVagent"' });
 
         const userRes = await fetch('https://api.github.com/user', {
           headers: { 'Authorization': `Bearer ${ghToken}` }
@@ -280,7 +285,7 @@ await this.byte.show('success', 'Done. Everything landed cleanly.');
         if (!createRes.ok) {
           const err = await createRes.json();
           if (err.message?.includes('already exists')) {
-            this.ui.printSuccess(`Repo "${repoName}" already exists. Pushing to existing repo...`);
+            this.ui.printSuccess(`Repo "${repoName}" exists. Pushing...`);
           } else {
             throw new Error(err.message);
           }

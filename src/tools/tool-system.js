@@ -70,10 +70,19 @@ export class ToolSystem {
 
     const isDevServer = command.includes('dev') || command.includes('start') || command.includes('serve') || command.includes('runserver');
     
-    if (isDevServer) {
+    let cwd = this.root;
+    let cmd = command;
+    
+    const cdMatch = command.match(/^cd\s+([^\s&&]+)\s*&&?\s*(.+)$/);
+    if (cdMatch) {
+      cwd = path.join(this.root, cdMatch[1]);
+      cmd = cdMatch[2].replace(/^&&?\s*/, '');
+    }
+    
+    if (isDevServer || cmd.includes('dev') || cmd.includes('start')) {
       return new Promise((resolve, reject) => {
-        const child = spawn(command, [], {
-          cwd: this.root,
+        const child = spawn(cmd, [], {
+          cwd: cwd,
           shell: true,
           detached: true,
           stdio: 'ignore'
@@ -88,9 +97,9 @@ export class ToolSystem {
     }
 
     return new Promise((resolve, reject) => {
-      const child = exec(command, {
-        cwd: this.root,
-        timeout: 120000,
+      const child = exec(cmd, {
+        cwd: cwd,
+        timeout: 300000,
         maxBuffer: 1024 * 1024,
       });
 

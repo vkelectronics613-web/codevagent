@@ -1,3 +1,5 @@
 node_modules/
 .codevagent/
 .env
+config.json
+
