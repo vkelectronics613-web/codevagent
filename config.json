@@ -1,0 +1,9 @@
+{
+  "preferences": {
+    "theme": "dark",
+    "autoPreview": true,
+    "defaultStack": "react"
+  },
+  "cerebrasApiKey": "",
+  "githubToken": ""
+}

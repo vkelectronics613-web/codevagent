@@ -1,0 +1,28 @@
+# Development files
+test-proj/
+test-project/
+.env.local
+.env.*.local
+
+# Git
+.git
+.github
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+build/
+dist/
+*.tgz

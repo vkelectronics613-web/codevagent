@@ -1,0 +1,32 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.20.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\Asus\Downloads\codevagent\codevagent\.npmrc
+5 silly config load:file:C:\Users\Asus\.npmrc
+6 silly config load:file:C:\Users\Asus\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm profile get
+8 verbose argv "profile" "get" "--json" "--cache" ".npm-cache-temp"
+9 verbose logfile logs-max:10 dir:C:\Users\Asus\Downloads\codevagent\codevagent\.npm-cache-temp\_logs\2026-04-14T16_09_48_778Z-
+10 verbose logfile C:\Users\Asus\Downloads\codevagent\codevagent\.npm-cache-temp\_logs\2026-04-14T16_09_48_778Z-debug-0.log
+11 silly logfile done cleaning log files
+12 http fetch GET 403 https://registry.npmjs.org/-/npm/v1/user 681ms (cache skip)
+13 verbose stack HttpErrorGeneral: 403 Forbidden - GET https://registry.npmjs.org/-/npm/v1/user
+13 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-fetch\lib\check-response.js:103:15
+13 verbose stack     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+13 verbose stack     at async Profile.get (C:\Program Files\nodejs\node_modules\npm\lib\commands\profile.js:104:18)
+13 verbose stack     at async Npm.exec (C:\Program Files\nodejs\node_modules\npm\lib\npm.js:207:9)
+13 verbose stack     at async module.exports (C:\Program Files\nodejs\node_modules\npm\lib\cli\entry.js:74:5)
+14 verbose statusCode 403
+15 error code E403
+16 error 403 403 Forbidden - GET https://registry.npmjs.org/-/npm/v1/user
+17 error 403 In most cases, you or one of your dependencies are requesting
+17 error 403 a package version that is forbidden by your security policy, or
+17 error 403 on a server you do not have access to.
+18 verbose cwd C:\Users\Asus\Downloads\codevagent\codevagent
+19 verbose os Windows_NT 10.0.26200
+20 verbose node v22.20.0
+21 verbose npm  v10.9.3
+22 verbose exit 1
+23 verbose code 1
+24 error A complete log of this run can be found in: C:\Users\Asus\Downloads\codevagent\codevagent\.npm-cache-temp\_logs\2026-04-14T16_09_48_778Z-debug-0.log

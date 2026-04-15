@@ -1,0 +1,72 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.20.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\Asus\Downloads\codevagent\codevagent\.npmrc
+5 silly config load:file:C:\Users\Asus\.npmrc
+6 silly config load:file:C:\Users\Asus\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm publish
+8 verbose argv "publish" "--cache" ".npm-cache-temp"
+9 verbose logfile logs-max:10 dir:C:\Users\Asus\Downloads\codevagent\codevagent\.npm-cache-temp\_logs\2026-04-14T16_18_31_147Z-
+10 verbose logfile C:\Users\Asus\Downloads\codevagent\codevagent\.npm-cache-temp\_logs\2026-04-14T16_18_31_147Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 verbose publish [ '.' ]
+13 silly logfile done cleaning log files
+14 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+15 warn publish npm auto-corrected some errors in your package.json when publishing.  Please run "npm pkg fix" to address these errors.
+16 warn publish errors corrected:
+16 warn publish "bin[codevagent]" script name was cleaned
+16 warn publish "repository.url" was normalized to "git+https://github.com/vkelectronics613-web/codevagent.git"
+17 notice
+18 notice 📦  codevagent@1.0.0
+19 notice Tarball Contents
+20 notice 1.1kB LICENSE
+20 notice 2.1kB README.md
+20 notice 1.0kB package.json
+20 notice 3.7kB src/ai/executor.js
+20 notice 1.9kB src/ai/planner.js
+20 notice 1.7kB src/ai/specialist.js
+20 notice 4.4kB src/core/agent-loop.js
+20 notice 2.3kB src/core/config.js
+20 notice 3.8kB src/core/workspace.js
+20 notice 1.3kB src/index.js
+20 notice 2.6kB src/tools/tool-system.js
+20 notice 922B src/ui/byte.js
+20 notice 2.0kB src/ui/terminal.js
+20 notice 489B src/utils/args.js
+20 notice 1.2kB src/utils/security.js
+21 notice Tarball Details
+22 notice name: codevagent
+23 notice version: 1.0.0
+24 notice filename: codevagent-1.0.0.tgz
+25 notice package size: 10.6 kB
+26 notice unpacked size: 30.5 kB
+27 notice shasum: 29e4fe0d638a6555902fd2f1328a125c7ae9d97c
+28 notice integrity: sha512-79twhFeLpmqxT[...]yKij0duf6Y07Q==
+29 notice total files: 15
+30 notice
+31 notice Publishing to https://registry.npmjs.org/ with tag latest and default access
+32 http fetch PUT 403 https://registry.npmjs.org/codevagent 1377ms
+33 verbose stack HttpErrorGeneral: 403 Forbidden - PUT https://registry.npmjs.org/codevagent - You may not perform that action with these credentials.
+33 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-fetch\lib\check-response.js:103:15
+33 verbose stack     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+33 verbose stack     at async publish (C:\Program Files\nodejs\node_modules\npm\node_modules\libnpmpublish\lib\publish.js:53:15)
+33 verbose stack     at async otplease (C:\Program Files\nodejs\node_modules\npm\lib\utils\auth.js:8:12)
+33 verbose stack     at async #publish (C:\Program Files\nodejs\node_modules\npm\lib\commands\publish.js:162:7)
+33 verbose stack     at async Publish.exec (C:\Program Files\nodejs\node_modules\npm\lib\commands\publish.js:46:5)
+33 verbose stack     at async Npm.exec (C:\Program Files\nodejs\node_modules\npm\lib\npm.js:207:9)
+33 verbose stack     at async module.exports (C:\Program Files\nodejs\node_modules\npm\lib\cli\entry.js:74:5)
+34 verbose statusCode 403
+35 verbose pkgid codevagent@1.0.0
+36 error code E403
+37 error 403 403 Forbidden - PUT https://registry.npmjs.org/codevagent - You may not perform that action with these credentials.
+38 error 403 In most cases, you or one of your dependencies are requesting
+38 error 403 a package version that is forbidden by your security policy, or
+38 error 403 on a server you do not have access to.
+39 verbose cwd C:\Users\Asus\Downloads\codevagent\codevagent
+40 verbose os Windows_NT 10.0.26200
+41 verbose node v22.20.0
+42 verbose npm  v10.9.3
+43 verbose exit 1
+44 verbose code 1
+45 error A complete log of this run can be found in: C:\Users\Asus\Downloads\codevagent\codevagent\.npm-cache-temp\_logs\2026-04-14T16_18_31_147Z-debug-0.log
